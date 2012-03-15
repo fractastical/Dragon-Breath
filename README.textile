@@ -52,7 +52,7 @@ To recap, four basic steps:
 # Add paths for export (edit PROJECTPATHS)
 # Export (export.sh)
 
-"Best practice and examples reside here.":examples.textile
+"Best practice and examples reside here.":https://github.com/fractastical/Dragon-Breath/examples.textile
 
 
 
