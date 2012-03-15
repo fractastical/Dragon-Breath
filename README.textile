@@ -8,7 +8,7 @@ Dragon Breath is a command line tool to import class libraries stored in git rep
 
 *This adds a project to your app as a git submodule.  For example, you might do:*
 
-@bash add.sh git@github.com:apex-commons/StringUtils.git ApexCommonsStringUtils@@
+@bash add.sh git@@@github.com:apex-commons/StringUtils.git ApexCommonsStringUtils@
 
 This adds the submodule to your git repository in the folder submodules/ApexCommonsStringUtils. It also adds an entry to the SUBMODPATHS file. If you don’t want to use all of files in the repository you can change the path in this file. 
 
