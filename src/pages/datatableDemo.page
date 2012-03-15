@@ -1,5 +1,0 @@
-<apex:page >  
-
-    <c:enhancedDatatable objectName="Contact" columns="FirstName, LastName, Phone" displaySearch="true" alphabeticPaginateColumn="LastName" editable="true" />   
-
-</apex:page>
