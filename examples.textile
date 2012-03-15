@@ -1,0 +1,22 @@
+
+*Examples*
+
+Here is what I include as a part of each deployment:
+
+**Classes**
+* TestUtils - Utility for easily generating TestUsers 
+* LimitUtils - Utility for dealing Limits in Salesforce
+* StringUtils (imported from Apex Commons)
+* ListUtils (imported from Apex Commons)
+* HTTPUtils (imported from Apex Commons)
+* SmartFactory (imported from Botoscloud) 
+
+**Static Resources**
+* jQueryUI, including jQuery min
+* Blueprint CSS framework
+* Additional jquery Validation scripts
+* CircleIcon set
+
+**Additional Notes**
+
+This package is maintained in developer org. Each imported resource is maintained as a git submodule. In the case of SmartFactory, the submodule is the repo maintained by Matthew Botos. In the case of Apex-Commons, it is a separate git repo in which changes to unused files are ignored (at some point I may separate all of Apex Commons into separate modules).

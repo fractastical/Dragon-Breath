@@ -45,7 +45,6 @@ To export you must update entries in the PROJECTPATHS file.
 That’s all. All of the files will now be in your project path and ready for deployment via the Force.com IDE, Ant, MavensMate, or whatever deployment tool you use. 
 
 
-
 To recap, four basic steps:
 
 # Add project paths  (add.sh)
