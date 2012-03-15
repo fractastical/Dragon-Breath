@@ -1,16 +1,30 @@
 **Dragon Breath**
 
-Dragon Breath is a command line tool to import class libraries stored in git repositories and use them for multiple (Force.com) projects.
+Dragon Breath is a lightweight package manager primarily for use with Salesforce. It uses git repositories (imported as submodules). It is a bit like rubygems except without any central management. 
 
-*Basic functionality is as follows:*
+The basic way things work is:
 
-@bash add.sh project_repo_address project_folder@
+  (1) You define a list of packages you want to import
+  (2) Dragon Breath installs them as git submodules and imports all the files into a single central directory, adding any missing metadata
+  (3) Dragon Breath exports all these to your project directory
 
-*This adds a project to your app as a git submodule.  For example, you might do:*
+This is *most excellent* for when you commonly use similar stylesheets, test utilities, etc. across multiple projects. With Dragon Breath you only need to keep these in a single (or multiple) git repos and you can nearly effortlessly follow the DRY principle with full version control. 
+
+At the moment other commonly used libraries, including Apex-Commons, are available as distinct git repositories. This allows you to easily use string methods, HTTPUtils, list methods, etc. that are not available in standard Apex without importing the entire library.
+
+*Basic usage is as follows:*
+
+@bash add.sh git_repo_address project_folder@
+
+This adds a project to your app as a git submodule.  
+
+*Example:*
 
 @bash add.sh git@@@github.com:apex-commons/StringUtils.git ApexCommonsStringUtils@
 
-This adds the submodule to your git repository in the folder submodules/ApexCommonsStringUtils. It also adds an entry to the SUBMODPATHS file. If you don’t want to use all of files in the repository you can change the path in this file. 
+This adds the submodule to your git repository in the folder submodules/ApexCommonsStringUtils. It also adds an entry to the SUBMODPATHS file. 
+
+If you later decie you don't want to use the module, simply edit it away in the SUBMODPATHS file.
 
 *The next step is to update:*
 
@@ -18,38 +32,28 @@ This adds the submodule to your git repository in the folder submodules/ApexComm
 
 This updates each submodule to the master, copies the files so they are ready for deployment, and (via a ruby script) generates any missing meta xml files. This allows you to keep chunky xml files outside of your repositories if you want.
 
-To export you must update entries in the PROJECTPATHS file. For the moment, all you need to do is:
+To export you must update entries in the PROJECTPATHS file. 
+
+*Add the project path to your PROJECTPATH file:*
+
+ @/SalesforceProjects/Pipeline@
 
 *Now you are ready to export:*
 
 	@bash export.sh@
 
-That’s all. All of the files will now be in your project path and ready for deployment. 
-
-Note: at some point in the near future I also plan to support non-class files (e.g. Static Resources, Visualforce components, etc.) and eventually packaging, namespacing, running tests, and deployment. I have a Ruby library already supports many of these things but it is not as robust as I need to use for everyday deployment. 
+That’s all. All of the files will now be in your project path and ready for deployment via the Force.com IDE, Ant, MavensMate, or whatever deployment tool you use. 
 
 
-*Here is what I include as a part of each deployment:*
 
-**Classes**
-* TestUtils - Utility for easily generating TestUsers 
-* LimitUtils - Utility for dealing Limits in Salesforce
-* StringUtils (imported from Apex Commons)
-* ListUtils (imported from Apex Commons)
-* HTTPUtils (imported from Apex Commons)
-* SmartFactory (imported from Botoscloud) 
+To recap, four basic steps:
 
-**Static Resources**
-* jQueryUI, including jQuery min
-* Blueprint CSS framework
-* Additional jquery Validation scripts
-* CircleIcon set
+# Add project paths  (add.sh)
+# Run update script (update.sh)
+# Add paths for export (edit PROJECTPATHS)
+# Export (export.sh)
 
-**Additional Notes**
-
-This package is maintained in developer org. Each imported resource is maintained as a git submodule. In the case of SmartFactory, the submodule is the repo maintained by Matthew Botos. In the case of Apex-Commons, it is a separate git repo in which changes to unused files are ignored (at some point I may separate all of Apex Commons into separate modules).
-
-
+"Best practice and examples reside here.":examples.textile
 
 
 
