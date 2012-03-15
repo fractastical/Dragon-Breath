@@ -32,18 +32,18 @@ Note: at some point in the near future I also plan to support non-class files (e
 *Here is what I include as a part of each deployment:*
 
 **Classes**
-    bq. TestUtils - Utility for easily generating TestUsers 
-    LimitUtils - Utility for dealing Limits in Salesforce
-    StringUtils (imported from Apex Commons)
-    ListUtils (imported from Apex Commons)
-    HTTPUtils (imported from Apex Commons)
-    SmartFactory (imported from Botoscloud) 
+bq.TestUtils - Utility for easily generating TestUsers 
+LimitUtils - Utility for dealing Limits in Salesforce
+StringUtils (imported from Apex Commons)
+ListUtils (imported from Apex Commons)
+HTTPUtils (imported from Apex Commons)
+SmartFactory (imported from Botoscloud) 
 
 **Static Resources**
-   bq. jQueryUI, including jQuery min
-   Blueprint CSS framework
-   Additional jquery Validation scripts
-   CircleIcon set
+bq. jQueryUI, including jQuery min
+Blueprint CSS framework
+Additional jquery Validation scripts
+CircleIcon set
 
 **Additional Notes**
 
