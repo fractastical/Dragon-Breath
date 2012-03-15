@@ -1,0 +1,182 @@
+<apex:page >  
+
+    <apex:outputPanel id="db">
+        <c:enhancedDatatable objectName="Account" columns="Name, Type" multiselect="true" displaySearch="false" alphabeticPaginateColumn="Name" editable="true" />   
+    </apex:outputPanel>
+    <div class="clear" style="margin-top:10px">&nbsp;</div>
+
+    <apex:pageBlock >    
+        <apex:form >
+            <apex:pageBlockSection columns="2">
+                <apex:outputLabel value="Value to update on selected records"/>
+                <apex:inputText styleClass="valueToUpdate" />
+                <apex:commandButton value="Update Now" onclick="processUpdate(); return false;" />
+                <!-- <apex:commandButton value="Update selection critera" /> -->
+            </apex:pageBlockSection>
+        </apex:form>
+    </apex:pageBlock>        
+
+      <div id="selectParams" style="display: none" >  
+
+              <apex:outputpanel id="apd">  
+
+                    <apex:form >
+                            <apex:pageBlock >
+                                    <apex:pageBlockSection columns="3"  title="Parameters to Limit Account">
+            
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+        
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+        
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+                                         
+                                     </apex:pageBlockSection>
+        
+                                    <apex:pageBlockSection columns="3"  title="Assets to include">
+            
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+        
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+        
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+                                         
+                                     </apex:pageBlockSection>
+                                     
+                                 <apex:pageBlockSection columns="3"  title="Assets not to include">
+            
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+        
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+        
+                                         <apex:selectList size="1">
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                             <apex:selectOption itemLabel="Name" itemValue="Name"/>
+                                         </apex:selectList>
+                                         equals
+                                         <apex:inputText />
+                                         
+                                     </apex:pageBlockSection>
+        
+                                          <apex:commandButton action="{!update}" 
+                                                       oncomplete="$('#selectParams').dialog('close')" value="Select" rerender="datatable" /> 
+                                          <apex:commandButton value="Cancel" immediate="true" 
+                                                       oncomplete="$('#selectParams').dialog('close')"/>
+        
+                           </apex:pageBlock>
+                           </apex:form>
+               
+               </apex:outputpanel> 
+
+       </div> <!-- addTask -->
+
+
+                    <script type="text/javascript">
+                    
+                           $(function(){      
+                  
+                                $("#selectParams").dialog({
+                                    autoOpen: true,
+                                    modal: true,
+                                    closeable: false,
+                                    resizable: false,
+                                    width: 600
+                                });
+                                
+                            });
+                            
+                      </script>
+
+                <script>
+                    var fieldFromCustomSetting = 'Type'; // TODO: Hardcoded for the moment.
+                    //TODO: move to inside
+                    var noOfSuccessfulIds=0;
+                    function processUpdate() {
+                    
+                              // run update for datatable for selected fields + fieldFromCustomSetting
+                              var ids = $enhancedAccountdatatable.getGridParam('selarrrow');
+                              console.log(ids);  
+                              var currentValofUpdateField = $(".valueToUpdate").val();
+                              for ( var i in ids )  
+                              {  
+                                 console.log('attempting update'); 
+                                 $.ajax({
+                                  url: '{!URLFOR($Page.saveData)}?type=Account&oper=edit&id=' + ids[i] + '&' + fieldFromCustomSetting + '=' + currentValofUpdateField ,
+                                  success: successOnUpdate(ids, currentValofUpdateField),
+                                  failure: failureOnUpdate(ids)
+                                });
+                              }
+                              if (noOfSuccessfulIds == ids.length)
+                                  alert('Last update successful. ' + noOfSuccessfulIds + ' records updated.');
+                              else 
+                                  alert(noOfSuccessfulIds + ' ' + ids.length);
+                              noOfSuccessfulIds = 0;
+                                  
+                            console.log("clicked." + "value is:" + $(".valueToUpdate").val());
+                   }
+                   function successOnUpdate(ids, currentValofUpdateField) {
+                       console.log('success on updating');
+                       updateRowStatus(ids[i], currentValofUpdateField);
+                       noOfSuccessfulIds++; 
+                       //alert('successfully updated');
+                   }
+                   function failureOnUpdate(ids) {
+                       console.log('failure on updating');
+                       
+                   }
+
+                </script>
+
+
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+
+    
+</apex:page>
